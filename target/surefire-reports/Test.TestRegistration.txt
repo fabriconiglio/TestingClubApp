@@ -1,0 +1,31 @@
+-------------------------------------------------------------------------------
+Test set: Test.TestRegistration
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.027 s <<< FAILURE! -- in Test.TestRegistration
+Test.TestRegistration.SuccesfulRegistration -- Time elapsed: 0.016 s <<< ERROR!
+org.openqa.selenium.remote.NoSuchDriverException: 
+chromedriver located at ./src/test/resources/chromedriver/chromedriver.exe, cannot be executed
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location/
+Build info: version: '4.11.0', revision: '040bc5406b'
+System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.5.0-21-generic', java.version: '11.0.22'
+Driver info: driver.version: ChromeDriver
+	at org.openqa.selenium.remote.service.DriverFinder.getPath(DriverFinder.java:45)
+	at org.openqa.selenium.remote.service.DriverFinder.getPath(DriverFinder.java:13)
+	at org.openqa.selenium.chrome.ChromeDriver.generateExecutor(ChromeDriver.java:99)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:51)
+	at Test.TestRegistration.setUp(TestRegistration.java:31)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	Suppressed: java.lang.IllegalArgumentException: Input must be set
+		at org.openqa.selenium.internal.Require.nonNull(Require.java:60)
+		at org.openqa.selenium.support.ui.FluentWait.<init>(FluentWait.java:94)
+		at org.openqa.selenium.support.ui.WebDriverWait.<init>(WebDriverWait.java:74)
+		at org.openqa.selenium.support.ui.WebDriverWait.<init>(WebDriverWait.java:43)
+		at Pages.BasePage.<init>(BasePage.java:17)
+		at Pages.RegisterPage.<init>(RegisterPage.java:31)
+		at Test.TestRegistration.cerrar(TestRegistration.java:76)
+		... 3 more
+
