@@ -19,15 +19,6 @@ import io.restassured.response.Response;
 
 public class GetPostTest {
 
-    private String username = "perla";
-    private String password = "password";
-    private String customerId = "13211";
-    private String idAccount = "14676";
-    private String idAccount2 = "15897";
-
-    private String acoountType = "1";
-    private String amount = "100";
-
     static ExtentSparkReporter report = new ExtentSparkReporter("target/REPORTES_BACKEND_TESTS.html");
     static ExtentReports extent;
     static ExtentTest test;
@@ -38,72 +29,32 @@ public class GetPostTest {
         extent.attachReporter(report);
     }
 
-
- /*   @Test
-    @Tag("TESTBACKEND")
-    public void getLogin() {
-
-     JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("username", "perla");
-        requestBody.addProperty("password", "password");
-        given()
-                .contentType("application/json")
-                .body(requestBody)
-                .get("https://parabank.parasoft.com/parabank/services/bank/login/"+username+"/"+password)
-                .then()
-                .statusCode(200)
-                .log().body();
-    }
-*/
-    @Test
-    @Tag("TESTBACKEND")
-    @Order(1)
-    public void getRegisterPage() {
-
-        ExtentTest test = extent.createTest("Verificación URL");
-        test.log(Status.INFO, "Comienza el Test");
-        given()
-                .when()
-                .get("https://parabank.parasoft.com/parabank/register.htm")
-                .then()
-                .statusCode(200)
-                .log().body();
-
-        test.log(Status.PASS, "Validación de URL Exitosa.");
-    }
-
-
     @Test
     @Tag("TESTBACKEND")
     @Order(2)
-    public void PostNewAccount() {
-        ExtentTest test = extent.createTest("Creación nueva cuenta exitosa");
+    public void ListPlayers() {
+        ExtentTest test = extent.createTest("Listado de Jugadores");
         test.log(Status.INFO, "Comienza el Test");
 
         given()
-                .auth().basic(username, password)
-                .post( "https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId="+customerId
-                        +"&newAccountType="+acoountType+"&fromAccountId="+idAccount )
+                .get("https://clubapp-backend-production-2.up.railway.app/players/list")
                 .then().statusCode(200)
                 .log().status()
                 .log().body();
 
-        test.log(Status.PASS, "Validación de Creación de cuenta Exitosa.");
+        test.log(Status.PASS, "Validación del Listado de Jugadores");
     }
 
     @Test
     @Tag("TESTBACKEND")
     @Order(3)
-    public void getAccountOverview() {
+    public void getPlayersPaidFee() {
 
-        ExtentTest test = extent.createTest("Consulta Reporte de Cuenta");
+        ExtentTest test = extent.createTest("Consulta Jugadores que han pagado la cuota");
         test.log(Status.INFO, "Comienza el Test");
 
         given()
-                .auth()
-                .basic(username, password)
-
-                .get("https://parabank.parasoft.com/parabank/services/bank/customers/"+customerId+"/accounts")
+                .get("https://clubapp-backend-production-2.up.railway.app/players/getPlayersPaidFee")
                 .then()
                 .statusCode(200)
                 .log().body();
@@ -114,39 +65,20 @@ public class GetPostTest {
     @Test
     @Tag("TESTBACKEND")
     @Order(4)
-    public void getAccountActivity() {
+    public void getByDni() {
 
-        ExtentTest test = extent.createTest("Consulta Actividad de Cuenta");
+        ExtentTest test = extent.createTest("Consulta de Jugador por DNI");
         test.log(Status.INFO, "Comienza el Test");
 
         given()
-                .auth()
-                .basic(username, password)
-                .get("https://parabank.parasoft.com/parabank/services/bank/accounts/"+idAccount+"/transactions/month/All/type/All")
+                .get("https://clubapp-backend-production-2.up.railway.app/players/getByDni/12345678")
                 .then()
                 .statusCode(200)
                 .log().body();
 
-        test.log(Status.PASS, "Validación de visualización Account Activity");
+        test.log(Status.PASS, "Validacion de Consulta de Jugador por DNI");
     }
 
-
-    @Test      //falta probar este,
-    @Tag("TESTBACKEND")
-    @Order(5)
-    public void postTransferFunds() {
-        ExtentTest test = extent.createTest("Validación Tranferencia de Fondos");
-        test.log(Status.INFO, "Comienza el Test");
-
-        given()
-                .auth().basic(username, password)
-                .post("https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId="
-                        +idAccount+"&toAccountId="+idAccount2+"&amount="+amount)
-                .then().statusCode(200)
-                .log().status()
-                .log().body();
-        test.log(Status.PASS, "Transferencia Exitosa de fondos");
-    }
     @AfterAll
     public static void quit() {
         extent.flush();
